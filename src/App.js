@@ -1,5 +1,5 @@
-import logo from './logo.svg';
-import './App.css';
+
+import './App.css'
 import Calculator from './calc/Calculator'
 import NumberProvider from './calc/NumberProvider'
 
