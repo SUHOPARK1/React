@@ -4,7 +4,8 @@ import { NumberContext } from './NumberProvider'
 const CalculatorButton = ({buttonValue}) => {
     const { handleSetDisplayValue } = useContext( NumberContext )
     return (
-        <button type="button" onClick = { () => handleSetDisplayValue}>
+        <button type="button" 
+        onClick = { () => handleSetDisplayValue(buttonValue)}>
             {buttonValue}
         </button>
         

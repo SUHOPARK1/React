@@ -4,13 +4,14 @@ export const NumberContext = React.createContext()
 
 const NumberProvider = props => {
     const [ number, setNumber ] = useState('')
-    const [ storeNumber, setStoreNumber ] = useState('')
-    const [ functionType, setFuntionType ] = useState('')
+    const [ storedNumber, setStoredNumber ] = useState('')
+    const [ functionType, setFunctionType ] = useState('')
 
-    const handleSetDisplayValue = num =>{
-        if((!number.includes('.') || num !== '.' ) &&  number.length < 8){
-            setNumber(`${(number + num).replace(/^0+/, '')}`)
-        }
+    
+
+    const handleSetStoredValue = () => {
+        setStoredNumber(number)
+        setNumber('')
     }
 
     const handleBackButton = () => {
@@ -22,15 +23,79 @@ const NumberProvider = props => {
 
     const handleClearValue = () => {
         setNumber('')
-        setStoreNumber('')
-        setFuntionType('')
+        setStoredNumber('')
+        setFunctionType('')
     }
 
+    const doMatch = () => {
+        if(number && storedNumber){
+            switch(functionType){
+                case '+':
+                    setStoredNumber(`${Math.round(`${(parseFloat(storedNumber) + parseFloat(number)) * 100}`) / 100}`)
+                    break
+                case '-':
+                    setStoredNumber(`${Math.round(`${(parseFloat(storedNumber) - parseFloat(number)) * 100}`) / 100}`)
+                    break
+                case '*':
+                    setStoredNumber(`${Math.round(`${(parseFloat(storedNumber) * parseFloat(number)) * 100}`) / 100}`)
+                    break
+                case '/':
+                    setStoredNumber(`${Math.round(`${(parseFloat(storedNumber) / parseFloat(number)) * 100}`) / 100}`)
+                    break
+                    default: break
+            }
+            setNumber('')
+            setFunctionType('')
+        }
+    }
+    const handleSetDisplayValue = num =>{
+        if((!number.includes('.') || num !== '.' ) &&  number.length < 8){
+            setNumber(`${(number + num).replace(/^0+/, '')}`)
+        }
+    }
+    const handleSetCalcFunction = type => {
+        if (number) {
+          setFunctionType(type)
+          handleSetStoredValue()
+        }
+        if (storedNumber) {
+          setFunctionType(type)
+        }
+      }
+
+    const handleToggleNegative = () => {
+        if(number){
+            if(number > 0){
+                setNumber(`-${number}`)
+            }else{
+                const positiveNumber = number.slice(1)
+                setNumber(positiveNumber)
+            }
+        }else if(storedNumber > 0){
+            setStoredNumber(`-${storedNumber}`)
+        }else{
+            const positiveNumber = storedNumber.slice(1)
+            setStoredNumber(positiveNumber)
+        }
+    }
+  
 
 
     return (<NumberContext.Provider
-    value = {{handleSetDisplayValue, handleBackButton, handleClearValue}}
+    value = {{handleSetDisplayValue, 
+             handleBackButton, 
+             handleClearValue, 
+             doMatch, 
+             handleToggleNegative, 
+             handleSetStoredValue, 
+             handleSetCalcFunction,
+             number, 
+             functionType,
+             storedNumber, 
+             setNumber}}
     >
+        {props.children}
+        
     
     </NumberContext.Provider>)
 }

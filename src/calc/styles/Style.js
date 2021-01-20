@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+//npm install styled-components --save
 export const CalculatorStyles = styled.div`
   background-color: #4abdac;
   width: 100%;
@@ -70,6 +71,7 @@ export const CalculatorStyles = styled.div`
     grid-column: 1/3;
   }
 `;
+
 export const DisplayStyles = styled.div`
   display: grid;
   grid-template-rows: 90px 50px;
