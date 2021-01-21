@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid'
+import { addTodoAction } from  './store/schedule.reducer'
 
 
-const ToDoInput = () => {
+export default function ToDoInput(){
     const [ todo, setTodo ] = useState('')
     const dispatch = useDispatch()
     const addTodo = todo => dispatch(addTodoAction(todo))
-    const { v4: uuidv4 } = require('uuid')
+   
     const submitForm = e => {
         e.preventDefault()
         const newTodo = {
             todoId: uuidv4(),
             name: todo,
             complete: false
-           
         }
         addTodo(newTodo)
         setTodo("")
@@ -45,4 +46,4 @@ const ToDoInput = () => {
         </form>
     </>
 }
-export default ToDoInput
+

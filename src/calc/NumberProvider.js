@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 export const NumberContext = React.createContext()
 
-const NumberProvider = props => {
+export default function NumberProvider(props) {
     const [ number, setNumber ] = useState('')
     const [ storedNumber, setStoredNumber ] = useState('')
     const [ functionType, setFunctionType ] = useState('')
@@ -100,4 +100,3 @@ const NumberProvider = props => {
     </NumberContext.Provider>)
 }
 
-export default NumberProvider
